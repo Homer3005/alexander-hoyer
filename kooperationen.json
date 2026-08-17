@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Schweiger Brauhaus",
+    "zeile": "Eigener Betrieb, Feste und Feiern",
+    "logo": "Bilder_Website/Kooperationen/schweiger.png",
+    "url": "https://schweiger-brauhaus.de"
+  },
+  {
+    "name": "Sleepy4Gin",
+    "zeile": "Eigene Marke, Mitgründer seit 2020",
+    "logo": "Bilder_Website/Kooperationen/gin.png",
+    "url": "https://weckediejungfrau.de"
+  },
+  {
+    "name": "Klosterschenke Scheyern",
+    "zeile": "Gemeinsame Projekte im Familienbetrieb",
+    "logo": "Bilder_Website/Kooperationen/scheyern.svg",
+    "url": "https://klosterschenke-scheyern.de"
+  },
+  {
+    "name": "Gastrofreunde",
+    "zeile": "Netzwerk für Gastronomen",
+    "logo": "Bilder_Website/Kooperationen/gastrofreunde.png",
+    "url": "https://gastrofreunde.com"
+  },
+  {
+    "name": "Früchte Feldbrach",
+    "zeile": "Obst und Gemüse für die Küche",
+    "logo": "Bilder_Website/Kooperationen/feldbrach.png",
+    "url": "https://fruechte-feldbrach.de"
+  },
+  {
+    "name": "Diversey",
+    "zeile": "Hygiene und Reinigung im Gastronomiebetrieb",
+    "logo": "Bilder_Website/Kooperationen/diversey-logo-vector.png",
+    "url": "https://diversey.com"
+  },
+  {
+    "name": "Mercedes-Benz",
+    "zeile": "Aktion über Auto Grill",
+    "logo": "Bilder_Website/Kooperationen/Mercedes-Benz_free_logo.svg.png",
+    "url": "https://www.mercedes-benz.de"
+  },
+  {
+    "name": "Dainese",
+    "zeile": "Erwähnung im Kanal",
+    "logo": "Bilder_Website/Kooperationen/dainese.svg",
+    "url": "https://www.dainese.com"
+  }
+]
+
