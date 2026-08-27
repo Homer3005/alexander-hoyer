@@ -160,19 +160,25 @@ a{text-decoration:none;color:inherit}
 .leistungskopf .kicker{display:block;font-family:var(--f-d);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#6B7F72;margin-bottom:10px}
 .leistungskopf h2{font-family:var(--f-d);font-weight:300;font-size:clamp(24px,2.5vw,34px);line-height:1.15;letter-spacing:0;color:var(--tanne)}
 .leistungskopf h2 b{font-weight:600}
-.felder{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;padding:0 var(--rand)}
-.feld{position:relative;padding-top:26px;display:flex;flex-direction:column}
+/* Sechs Spalten, jedes Feld ueber zwei. Reihe eins traegt drei Felder,
+   Reihe zwei zwei Felder mittig mit gleichem Weissraum links und rechts.
+   Alle fuenf Bloecke bleiben gleich breit. */
+.felder{display:grid;grid-template-columns:repeat(6,1fr);gap:26px;padding:0 var(--rand)}
+.feld{position:relative;padding-top:26px;display:flex;flex-direction:column;grid-column:span 2}
+.feld:nth-child(4){grid-column:2 / span 2}
+.feld:nth-child(5){grid-column:4 / span 2}
 .feld::before{content:"";position:absolute;left:0;top:0;width:30px;height:3px;background:var(--orangerot)}
 .feld .bildflaeche{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;border-radius:8px;margin-bottom:18px;background:#E4DED1}
 .feld .bildflaeche img{width:100%;height:100%;object-fit:cover}
 .feld .bildflaeche.frei img{object-fit:contain;padding:12%}
+.feld .bildflaeche.tiefer img{object-position:50% 25%}
+.feld .bildflaeche.leer{display:grid;place-items:center;background:repeating-linear-gradient(135deg,rgba(18,59,46,.06) 0 10px,transparent 10px 20px),#E4DED1}
+.feld .bildflaeche.leer span{font-family:var(--f-d);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A9C90}
 .feld .ziffer{font-family:var(--f-d);font-weight:700;font-size:13px;letter-spacing:.06em;color:var(--orangerot);display:block;margin-bottom:16px}
 .feld h3{font-family:var(--f-d);font-weight:600;font-size:21px;line-height:1.2;color:var(--tanne);margin-bottom:12px}
 .feld p{font-family:var(--f-t);font-size:16px;line-height:1.55;color:#2A4A3C;margin-bottom:18px}
 .feld p.platzhalter{color:#8A9C90}
-.feld .beleg{font-family:var(--f-d);font-size:12px;letter-spacing:.02em;color:#6B7F72;margin-top:auto;padding-top:6px;border-top:1px solid rgba(240,74,34,.22)}
-.feld .beleg.platzhalter{color:#9AA79F}
-.feld .hin{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-d);font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--orangerot);margin-top:16px;padding-bottom:3px;border-bottom:1px solid rgba(240,74,34,.45);align-self:flex-start;transition:color .18s,border-color .18s}
+.feld .hin{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-d);font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--orangerot);margin-top:auto;padding-top:16px;padding-bottom:3px;border-bottom:1px solid rgba(240,74,34,.45);align-self:flex-start;transition:color .18s,border-color .18s}
 .feld .hin:hover{color:var(--tanne);border-color:var(--tanne)}
 .feld .hin svg{transition:transform .18s}
 .feld .hin:hover svg{transform:translateX(3px)}
@@ -183,8 +189,11 @@ a{text-decoration:none;color:inherit}
 .koopkopf h2{font-family:var(--f-d);font-weight:400;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand)}
 .koopbahn{padding:0 var(--rand)}
 .koopbahn-innen{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:26px 40px}
-.koop{display:grid;place-items:center;flex:0 0 auto;width:170px;height:60px;min-width:0;min-height:0;overflow:hidden}
-.koop img{max-width:170px;max-height:60px;width:auto;height:auto;object-fit:contain;
+/* Fester Kasten je Eintrag. --kb und --kh sind die Grundmasse, --s der
+   Ausgleichsfaktor je Marke aus kooperationen.json. Er gleicht die optische
+   Groesse an, gemessen an der Tintenflaeche, nicht an der Bildkante. */
+.koop{--kb:150px;--kh:52px;--s:1;display:grid;place-items:center;flex:0 0 auto;width:180px;height:66px;min-width:0;min-height:0;overflow:hidden}
+.koop img{max-width:calc(var(--kb) * var(--s));max-height:calc(var(--kh) * var(--s));width:auto;height:auto;object-fit:contain;
   filter:brightness(0) invert(1);opacity:.82;transition:opacity .18s}
 .koop:hover img{opacity:1}
 .koop .wortmarke{font-family:var(--f-d);font-weight:600;font-size:16px;letter-spacing:.03em;color:rgba(243,239,231,.82);transition:color .18s;text-align:center;line-height:1.2}
@@ -219,6 +228,8 @@ a{text-decoration:none;color:inherit}
 
 @media(max-width:1100px){:root{--sichtbar:3;--koop-sichtbar:3}
   .felder{grid-template-columns:repeat(2,1fr);gap:32px}
+  .feld,.feld:nth-child(4){grid-column:auto}
+  .feld:nth-child(5){grid-column:1 / -1;width:calc(50% - 16px);margin:0 auto}
 }
 @media(max-width:760px){
   :root{--sichtbar:2;--koop-sichtbar:1;--luecke:12px}
@@ -234,11 +245,12 @@ a{text-decoration:none;color:inherit}
   .zaehler:nth-child(3)::before{display:none}
   .zaehler:nth-child(3),.zaehler:nth-child(4){border-top:1px solid rgba(217,191,160,.18)}
   .felder{grid-template-columns:1fr;gap:30px}
+  .feld:nth-child(5){grid-column:auto;width:auto;margin:0}
   .fuss-oben{grid-template-columns:1fr;gap:32px}
   .fuss-unten{flex-direction:column;align-items:flex-start;gap:14px}
   .koopbahn-innen{gap:20px 26px}
-  .koop{width:132px;height:48px}
-  .koop img{max-width:132px;max-height:48px}
+  .koop{width:140px;height:52px;--kb:118px;--kh:42px}
+  .koop img{max-width:calc(var(--kb) * var(--s));max-height:calc(var(--kh) * var(--s))}
   .koop .wortmarke{font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -248,13 +260,13 @@ a{text-decoration:none;color:inherit}
 <div class="seite">
 
   <!-- ===== 1 · JOYN-BAND ===== -->
-  <a class="joyn" href="https://www.joyn.de" target="_blank" rel="noopener">
+  <a class="joyn" href="https://www.joyn.de/serien/achtung-kontrolle-wir-kuemmern-uns-drum/25-93-themen-u-a-muenchens-biergaerten-im-test-wo-schmeckts-am-besten" target="_blank" rel="noopener">
     <div class="innen">
       <span class="punkt"></span>
-      <span class="lab">Neue Folge</span>
+      <span class="lab">Aktuelle Folge</span>
       <img class="marke" src="Bilder_Website/Logos/joyn.svg" alt="Joyn" onerror="this.outerHTML='<span class=&quot;lab&quot; style=&quot;letter-spacing:-.02em;font-size:17px;text-transform:lowercase&quot;>joyn<\/span>'">
       <span class="trenner"></span>
-      <span class="titel">Titel der Folge <em>· Staffel 1, Folge 3</em></span>
+      <span class="titel">Münchens Biergärten im Test <em>· Achtung Kontrolle!, Staffel 25, Folge 93 vom 18.08.2026</em></span>
       <span class="zu">Ansehen
         <svg width="13" height="10" viewBox="0 0 13 10" fill="none" aria-hidden="true"><path d="M8 1l4 4-4 4M12 5H0" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
       </span>
@@ -283,7 +295,7 @@ a{text-decoration:none;color:inherit}
   <!-- ===== 3 · VIDEO-KARUSSELL ===== -->
   <section class="videos" id="videos">
     <div class="videokopf">
-      <h2>Aktuelle <b>Videos</b></h2>
+      <h2>Aktuelle <b>Videos &amp; Presse</b></h2>
 
       <div class="kanaele">
         <a href="https://www.youtube.com/@dergastwirt" target="_blank" rel="noopener" aria-label="dergastwirt auf YouTube">
@@ -297,6 +309,9 @@ a{text-decoration:none;color:inherit}
         </a>
         <a href="https://www.joyn.de/mediatheken/kabel-eins" target="_blank" rel="noopener" aria-label="Kabel Eins auf Joyn">
           <img src="Bilder_Website/Logos/kabeleins.svg" alt="Kabel Eins" onerror="this.parentNode.remove()">
+        </a>
+        <a href="https://www.sueddeutsche.de/muenchen/ebersberg/gastronomie-markt-schwaben-schweiger-braeu-interview-alexander-hoyer-1.5740426?reduced=true" target="_blank" rel="noopener" aria-label="Interview in der Süddeutschen Zeitung">
+          <img src="Bilder_Website/Logos/Süddeutsche-Zeitung-Ligatur.png" alt="Süddeutsche Zeitung" onerror="this.parentNode.remove()">
         </a>
       </div>
 
@@ -353,9 +368,8 @@ a{text-decoration:none;color:inherit}
       <article class="feld">
         <span class="ziffer">01</span>
         <span class="bildflaeche"><img src="Bilder_Website/Leistungen/wirtshaus.jpg" alt="" onerror="this.style.display='none'"></span>
-        <h3>Zum Wirtshaus</h3>
-        <p class="platzhalter">Blindtext bis zur Freigabe. Hier stehen drei bis vier Zeilen zum eigenen Betrieb, etwa fünfzig Wörter. Sie sagen, wo das Wirtshaus steht, wofür die Küche steht und wann geöffnet ist.</p>
-        <span class="beleg platzhalter">Belegzeile, eine Zeile</span>
+        <h3>Gastronomie</h3>
+        <p>Seit 2013 führt Alexander das Schweiger Brauhaus in Markt Schwaben, 250 Plätze im Haus, 200 im Biergarten, ein Team von 30. Durchgehend warme Küche, regional und saisonal.</p>
         <a class="hin" href="https://schweiger-brauhaus.de" target="_blank" rel="noopener">Ansehen
           <svg width="13" height="10" viewBox="0 0 13 10" fill="none" aria-hidden="true"><path d="M8 1l4 4-4 4M12 5H0" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
         </a>
@@ -363,32 +377,39 @@ a{text-decoration:none;color:inherit}
 
       <article class="feld">
         <span class="ziffer">02</span>
-        <span class="bildflaeche"><img src="Bilder_Website/Leistungen/beratung.jpg" alt="" onerror="this.style.display='none'"></span>
-        <h3>Beratung</h3>
-        <p class="platzhalter">Blindtext bis zur Freigabe. Hier stehen drei bis vier Zeilen zur Beratung, etwa fünfzig Wörter. Sie nennen die Themen, den Ablauf und den Grund, warum ein Wirt zuhört.</p>
-        <span class="beleg platzhalter">Belegzeile, eine Zeile</span>
-        <a class="hin" href="mailto:beratung@alexander-hoyer.com?subject=Anfrage%20Beratung">Anfragen
+        <span class="bildflaeche tiefer"><img src="Bilder_Website/Leistungen/kooperationen.jpg" alt="" onerror="this.style.display='none'"></span>
+        <h3>Content &amp; Markenkooperationen</h3>
+        <p>Kooperationen mit Marken rund um Gastronomie, Food, Technik und Gastrobedarf: Social-Media-Kampagnen, Produkttests und Produktintegrationen. Gedreht im laufenden Betrieb, im eigenen Haus.</p>
+        <a class="hin" href="mailto:anfrage@alexander-hoyer.com?subject=Anfrage%20Kooperation">Anfragen
           <svg width="13" height="10" viewBox="0 0 13 10" fill="none" aria-hidden="true"><path d="M8 1l4 4-4 4M12 5H0" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
         </a>
       </article>
 
       <article class="feld">
         <span class="ziffer">03</span>
-        <span class="bildflaeche"><img src="Bilder_Website/Leistungen/catering.jpg" alt="" onerror="this.style.display='none'"></span>
-        <h3>Catering</h3>
-        <p class="platzhalter">Blindtext bis zur Freigabe. Hier stehen drei bis vier Zeilen zum Catering, etwa fünfzig Wörter. Sie beschreiben, was Alexander ausrichtet, für wen, und was den Unterschied zu einem gewöhnlichen Anbieter macht.</p>
-        <span class="beleg platzhalter">Belegzeile, eine Zeile</span>
-        <a class="hin" href="mailto:catering@alexander-hoyer.com?subject=Anfrage%20Catering">Anfragen
+        <span class="bildflaeche"><img src="Bilder_Website/Leistungen/medien-tv.jpg" alt="" onerror="this.style.display='none'"></span>
+        <h3>Medien &amp; TV</h3>
+        <p>Alexander steht als Protagonist vor der Kamera. Zuletzt bei kabel eins in „Achtung Kontrolle!“ im Test der Münchner Biergärten, davor bei München TV und in der Süddeutschen Zeitung.</p>
+        <a class="hin" href="https://www.joyn.de/serien/achtung-kontrolle-wir-kuemmern-uns-drum" target="_blank" rel="noopener">Ansehen
           <svg width="13" height="10" viewBox="0 0 13 10" fill="none" aria-hidden="true"><path d="M8 1l4 4-4 4M12 5H0" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
         </a>
       </article>
 
       <article class="feld">
         <span class="ziffer">04</span>
-        <span class="bildflaeche frei"><img src="Bilder_Website/Leistungen/gin.jpg" alt="" onerror="this.style.display='none'"></span>
-        <h3>Produktentwicklung</h3>
-        <p class="platzhalter">Blindtext bis zur Freigabe. Hier stehen drei bis vier Zeilen zur Produktentwicklung, etwa fünfzig Wörter. Sie beschreiben, wie ein Produkt mit ihm entsteht und woran es unterwegs geprüft wird.</p>
-        <span class="beleg platzhalter">Belegzeile, eine Zeile</span>
+        <span class="bildflaeche"><img src="Bilder_Website/Leistungen/beratung.jpg" alt="" onerror="this.style.display='none'"></span>
+        <h3>Beratung</h3>
+        <p>Alexander berät aus dem eigenen Betrieb heraus: Kalkulation, Abläufe, Personal und die digitalen Werkzeuge, die im Brauhaus täglich laufen.</p>
+        <a class="hin" href="mailto:beratung@alexander-hoyer.com?subject=Anfrage%20Beratung">Anfragen
+          <svg width="13" height="10" viewBox="0 0 13 10" fill="none" aria-hidden="true"><path d="M8 1l4 4-4 4M12 5H0" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
+        </a>
+      </article>
+
+      <article class="feld">
+        <span class="ziffer">05</span>
+        <span class="bildflaeche"><img src="Bilder_Website/Leistungen/gin.jpg" alt="" onerror="this.style.display='none'"></span>
+        <h3>Produktentwicklung &amp; Beteiligungen</h3>
+        <p>Aus einer Idee unter Freunden ist mit Sleepy4Gin ein fertiges Produkt geworden, vom Rezept bis zum Vertrieb. Diese Erfahrung bringt Alexander in neue Produkte und Beteiligungen ein.</p>
         <a class="hin" href="https://weckediejungfrau.de" target="_blank" rel="noopener">Ansehen
           <svg width="13" height="10" viewBox="0 0 13 10" fill="none" aria-hidden="true"><path d="M8 1l4 4-4 4M12 5H0" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>
         </a>
@@ -424,10 +445,11 @@ a{text-decoration:none;color:inherit}
       <div class="fuss-spalte">
         <h3>Zusammenarbeit</h3>
         <ul>
-          <li><a href="https://schweiger-brauhaus.de" target="_blank" rel="noopener">Zum Wirtshaus</a></li>
+          <li><a href="https://schweiger-brauhaus.de" target="_blank" rel="noopener">Gastronomie</a></li>
+          <li><a href="mailto:anfrage@alexander-hoyer.com?subject=Anfrage%20Kooperation">Content &amp; Markenkooperationen</a></li>
+          <li><a href="https://www.joyn.de/serien/achtung-kontrolle-wir-kuemmern-uns-drum" target="_blank" rel="noopener">Medien &amp; TV</a></li>
           <li><a href="mailto:beratung@alexander-hoyer.com?subject=Anfrage%20Beratung">Beratung</a></li>
-          <li><a href="mailto:catering@alexander-hoyer.com?subject=Anfrage%20Catering">Catering</a></li>
-          <li><a href="https://weckediejungfrau.de" target="_blank" rel="noopener">Produktentwicklung</a></li>
+          <li><a href="https://weckediejungfrau.de" target="_blank" rel="noopener">Produktentwicklung &amp; Beteiligungen</a></li>
         </ul>
       </div>
 
@@ -566,6 +588,7 @@ a{text-decoration:none;color:inherit}
     KOOPS.forEach(function(k){
       var el = document.createElement(k.url ? "a" : "span");
       el.className = "koop";
+      if (k.skala) el.style.setProperty("--s", k.skala);
       if (k.url){ el.href = k.url; el.target = "_blank"; el.rel = "noopener"; }
       el.setAttribute("title", k.name + (k.zeile ? " — " + k.zeile : ""));
       el.innerHTML =
